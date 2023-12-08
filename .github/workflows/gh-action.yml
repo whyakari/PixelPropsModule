@@ -84,7 +84,8 @@ jobs:
       - name: Search archive zip
         working-directory: ./PixelPropsModule
         run: |
-          zipname=$(find . -type f -name "*.zip" -print -quit)
+          zipname=$(find . -type f -name "*Pixel-*.zip" -print -quit)
+          echo $zipname
           echo "zipname=$zipname" >> $GITHUB_OUTPUT
         id: find-zip
 
