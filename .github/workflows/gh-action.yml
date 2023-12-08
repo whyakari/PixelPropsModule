@@ -86,14 +86,12 @@ jobs:
         id: find-zip
         working-directory: ./PixelPropsModule
         run: |
-          zipname=$(find . -type f -name '*Pixel*.zip' -print -quit | sed 's|^./||')
-          echo "zipname=$zipname" >> $GITHUB_ENV
-          echo $zipname
+          echo "zipname=$(find . -type f -name '*Pixel*.zip' -print -quit | sed 's|^./||')" >> $GITHUB_OUTPUT
     
       - name: Upload PixelProps to Releases
         uses: softprops/action-gh-release@v1
         with:
-          files: ${{ env.zipname }}
+          files: ${{ steps.find-zip.outputs.zipname }}
           token: ${{ secrets.TOKEN_GITHUB }}
           name: "PixelProps Update"
           tag_name: ${{ steps.read_name.outputs.final_name }}
