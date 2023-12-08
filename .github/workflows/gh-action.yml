@@ -104,7 +104,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            result/${{ steps.read_name.outputs.final_name }}.zip
+            result/*.zip
           token: ${{ secrets.TOKEN_GITHUB }}
           name: "PixelProps Update"
           tag_name: ${{ steps.read_name.outputs.final_name }}
