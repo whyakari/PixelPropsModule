@@ -67,12 +67,13 @@ jobs:
           cp ./**/**/{system,module}.prop result/
           cp -r META-INF/ result/
           cp customize.sh result/
-          
+          zip -r ${{ steps.zip.outputs.zipname }}.zip result/*
+          ls
+
       - name: ZipFile Sauce
         id: zip
         run: |
-          echo "zipname=\$(cat build.txt)" >> $GITHUB_ENV
-          zip -r $zipname /result
+          echo "zipname=$(cat build.txt)" >> $GITHUB_OUTPUT
         working-directory: ${{ github.workspace }}
 
       - name: Upload Prop ${{ matrix.device_name }}
@@ -85,7 +86,7 @@ jobs:
       - name: Upload PixelProps to Releases
         uses: softprops/action-gh-release@v1
         with:
-          files: result/${{ steps.zip.outputs.zipname }}.zip
+          files: ${{ steps.zip.outputs.zipname }}.zip
           token: ${{ secrets.TOKEN_GITHUB }}
           name: "PixelProps Update"
           tag_name: ${{ steps.read_name.outputs.final_name }}
