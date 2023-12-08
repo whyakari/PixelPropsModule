@@ -90,7 +90,6 @@ jobs:
       - name: Upload PixelProps to Releases
         uses: softprops/action-gh-release@v1
         with:
-          working-directory: ./PixelPropsModule
           files: ${{ steps.read_name.outputs.final_name }}.zip               
           token: ${{ secrets.TOKEN_GITHUB }}
           name: "PixelProps Update"
