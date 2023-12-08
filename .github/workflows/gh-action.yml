@@ -79,7 +79,7 @@ jobs:
           cp ./**/**/{system,module}.prop result/
           cp -r META-INF/ result/
           cp customize.sh result/
-          zip -r ${{ steps.read_name.final_name }}.zip result/*
+          zip -r ${{ steps.read_name.outputs.final_name }}.zip result/*
 
       - name: Search archive zip
         id: find-zip
