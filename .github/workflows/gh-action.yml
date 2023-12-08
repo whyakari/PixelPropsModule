@@ -76,6 +76,8 @@ jobs:
         working-directory: ./PixelPropsModule
         run: |
           cp ./**/**/{system,module}.prop .
+          cp -r META-INF/ .
+          cp customize.sh .
           zip -r ${{ steps.read_name.outputs.final_name }}.zip system.prop module.prop customize.sh META-INF
 
       - name: Search archive zip
