@@ -89,8 +89,8 @@ jobs:
 
       - name: Debug
         run: |
-          echo ${{ steps.find-zip.outputs.zipname }}
-          echo ${{ steps.read_name.final_name }}
+          echo $zipname
+          echo $final_name
 
       - name: Upload PixelProps to Releases
         uses: softprops/action-gh-release@v1
