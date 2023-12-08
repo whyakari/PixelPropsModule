@@ -85,11 +85,11 @@ jobs:
           ls result/
 
       - name: Search archive zip
+        id: find-zip
         working-directory: ./PixelPropsModule
         run: |
           echo "zipname=$(find . -type f -name '*Pixel*.zip' -print -quit)" >> $GITHUB_ENV
-        id: find-zip
-
+          
       - name: Upload PixelProps to Releases
         uses: softprops/action-gh-release@v1
         with:
