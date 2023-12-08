@@ -81,6 +81,7 @@ jobs:
           cp customize.sh result/
           zip -r ${{ steps.read_name.outputs.final_name }}.zip result/*
           ls
+          pwd
 
       - name: Search archive zip
         id: find-zip
@@ -91,7 +92,7 @@ jobs:
       - name: Upload PixelProps to Releases
         uses: softprops/action-gh-release@v1
         with:
-          files: ${{ steps.find-zip.outputs.zipname }}
+          files: ${{ steps.read_name.outputs.final_name }}
           token: ${{ secrets.TOKEN_GITHUB }}
           name: "PixelProps Update"
           tag_name: ${{ steps.read_name.outputs.final_name }}
