@@ -82,7 +82,7 @@ jobs:
       - name: Read final_name from file
         id: read_name
         run: | 
-          echo ::set-output name=final_name::$(cat build.txt)
+          echo "final_name=$(cat build.txt)" >> $GITHUB_OUTPUT
         working-directory: ${{ github.workspace }}
 
       - name: Upload files to release
