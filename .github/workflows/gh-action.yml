@@ -6,7 +6,7 @@ on:
       device_name:
         description: "Device Name"
         required: true
-        default: "husky"
+        default: "sailfish"
         type: choice
  
         options:
@@ -82,13 +82,13 @@ jobs:
         id: find-zip
         working-directory: ./PixelPropsModule
         run: |
-          echo "zipname=$(find . -type f -name '*Pixel*.zip' -print -quit | sed 's|^./||')" >> $GITHUB_OUTPUT
+          echo "zipname=$(find /home/runner/work/PixelPropsModule/PixelPropsModule/PixelPropsModule -type f -name '*Pixel*.zip' -print -quit | sed 's|^./||')" >> $GITHUB_OUTPUT
     
       - name: Upload PixelProps to Releases
         uses: softprops/action-gh-release@v1
         with:
           files: /home/runner/work/PixelPropsModule/PixelPropsModule/PixelPropsModule/*Pixel*.zip
           token: ${{ secrets.TOKEN_GITHUB }}
-          name: "PixelProps Update"
+          name: "PixelProps ${{ steps.read_name.outputs.final_name }}"
           tag_name: ${{ steps.read_name.outputs.final_name }}
           body_path: changelog.md
