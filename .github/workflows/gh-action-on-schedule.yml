@@ -1,4 +1,4 @@
-name: Build-Prop Pixel with Cron
+name: PixelProps (schedule)
 
 on:
   workflow_dispatch:
