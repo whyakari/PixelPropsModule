@@ -39,19 +39,23 @@ jobs:
           packages: dos2unix python3 python3-pip
 
       - name: Install protobuf
+        working-directory: ./PixelPropsModule
         run: |
           pip install --upgrade pip
           pip3 install -Iv protobuf==3.20.3
 
       - name: Make executable all script
+        working-directory: ./PixelPropsModule
         run: |
           chmod +x *.sh
 
       - name: Download last ota ${{ github.event.inputs.device_name }}
+        working-directory: ./PixelPropsModule
         run: |
           ./download_last_ota_build.sh ${{ github.event.inputs.device_name }}
 
-      - name: Extract Image and build prop
+      - name: Extract Image and build Prop
+        working-directory: ./PixelPropsModule
         run: |
           ./extract_images.sh
 
@@ -59,22 +63,24 @@ jobs:
         id: read_name
         run: | 
           echo "final_name=$(cat build.txt)" >> $GITHUB_OUTPUT
-        working-directory: ${{ github.workspace }}
+        working-directory: ./PixelPropsModule
 
       - name: Copy prop to result ${{ matrix.device_name }}
+        working-directory: ./PixelPropsModule
         run: |
           mkdir -p result
           cp ./**/**/{system,module}.prop result/
           cp -r META-INF/ result/
           cp customize.sh result/
           zip -r ${{ steps.zip.outputs.zipname }}.zip result/*
+          pwd
           ls
 
       - name: ZipFile Sauce
         id: zip
         run: |
           echo "zipname=$(cat build.txt)" >> $GITHUB_OUTPUT
-        working-directory: ${{ github.workspace }}
+        working-directory: ./PixelPropsModule
 
       - name: Upload Prop ${{ matrix.device_name }}
         uses: actions/upload-artifact@v3
@@ -91,3 +97,5 @@ jobs:
           name: "PixelProps Update"
           tag_name: ${{ steps.read_name.outputs.final_name }}
           body_path: changelog.md
+
+        working-directory: ./PixelPropsModule
