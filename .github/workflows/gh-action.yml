@@ -106,7 +106,10 @@ jobs:
           files: |
             result/${{ steps.read_name.outputs.final_name }}.zip
           token: ${{ secrets.TOKEN_GITHUB }}
-
+          name: "PixelProps Update"
+          tag_name: ${{ steps.read_name.outputs.final_name }}
+          body_path: ${{ github.workspace }}-changelog.md
+  
       - name: Add information to release
         uses: irongut/EditRelease@v1.2.0
         with:
