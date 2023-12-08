@@ -80,17 +80,15 @@ jobs:
           cp -r META-INF/ result/
           cp customize.sh result/
           zip -r ${{ steps.read_name.final_name }}.zip result/*
+          ls
+          pwd
+          ls result/
 
       - name: Search archive zip
         working-directory: ./PixelPropsModule
         run: |
-          echo "zipname=$(find . -type f -name '*Pixel*.zip' -print -quit)" >> $GITHUB_OUTPUT
+          echo "zipname=$(find . -type f -name '*Pixel*.zip' -print -quit)" >> $GITHUB_ENV
         id: find-zip
-
-      - name: Debug
-        run: |
-          echo $zipname
-          echo $final_name
 
       - name: Upload PixelProps to Releases
         uses: softprops/action-gh-release@v1
