@@ -39,7 +39,7 @@ jobs:
       - name: Cat build.txt
         id: read_name
         run: |
-          echo "final_name=$(cat build.text)" >> $GITHUB_OUTPUT
+          echo "final_name=$(cat build.txt)" >> $GITHUB_OUTPUT
         working-directory: ${{ github.workspace }}
 
       - name: Copy prop to result ${{ matrix.device_name }}
