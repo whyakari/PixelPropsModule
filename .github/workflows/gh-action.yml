@@ -1,4 +1,4 @@
-name: Build-Prop Pixel
+name: PixelProps
 
 on:
   workflow_dispatch:
