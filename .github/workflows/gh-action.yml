@@ -91,8 +91,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
         with:
           upload_url: ${{ needs.prepare_build.outputs.upload_url }}
-          asset_path: ./${{ steps.extract_and_build.outputs.module_base_name }}.zip
-          asset_name: ${{ steps.extract_and_build.outputs.module_base_name }}.zip
+          asset_path: result
+          asset_name: ${{ steps.read_name.outputs.final_name }}
           asset_content_type: application/zip
 
       - name: Add information to release
@@ -103,7 +103,7 @@ jobs:
           replacebody: false
           body: |
             #### Module
-            - File name: `${{ steps.extract_and_build.outputs.module_base_name }}.zip`
+            - File name: `${{ steps.read_name.outputs.final_name }}`
             - File hash (SHA256): `${{ steps.extract_and_build.outputs.module_hash }}`
             #### Firmware
             - Build ID: `${{ steps.extract_and_build.outputs.device_build_id }}`
