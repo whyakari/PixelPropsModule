@@ -52,6 +52,11 @@ jobs:
 
   build:
     name: Build Props
+    needs: prepare_build
+    strategy:
+      matrix:
+        device_name: ${{ github.event.inputs.device_name }}
+
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
