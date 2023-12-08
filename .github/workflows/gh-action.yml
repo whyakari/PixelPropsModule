@@ -55,7 +55,7 @@ jobs:
     needs: prepare_build
     strategy:
       matrix:
-        device_name: ${{ github.event.inputs.device_name }}
+        device_name: [ ${{ github.event.inputs.device_name }} ]
 
     runs-on: ubuntu-latest
     steps:
