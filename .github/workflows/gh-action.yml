@@ -80,6 +80,12 @@ jobs:
           cp -r META-INF/ result/
           cp customize.sh result/
           zip -r ${{ steps.read_name.final_name }}.zip result/*
+
+      - name: Debug
+        working-directory: ./PixelPropsModule
+        run: |
+          export zipname=$(find . -type f -name '*Pixel*.zip' -print -quit)
+          echo $zipname
   
       - name: Search archive zip
         id: find-zip
