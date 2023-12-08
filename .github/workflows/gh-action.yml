@@ -92,6 +92,12 @@ jobs:
           cp ./**/**/{system,module}.prop result/
           cp -r META-INF/ result/
           cp customize.sh result/
+          
+      - name: ZipFile Sauce
+        id: zip
+        run: |
+          echo "zipname=$(result/cat build.txt).zip" >> $GITHUB_OUTPUT
+        working-directory: ${{ github.workspace }}
 
       - name: Upload Prop ${{ matrix.device_name }}
         uses: actions/upload-artifact@v3
@@ -103,24 +109,8 @@ jobs:
       - name: Upload PixelProps to Releases
         uses: softprops/action-gh-release@v1
         with:
-          files: |
-            result/*.zip
+          files: ${{ steps.zip.outputs.zipname }}
           token: ${{ secrets.TOKEN_GITHUB }}
           name: "PixelProps Update"
           tag_name: ${{ steps.read_name.outputs.final_name }}
           body_path: changelog.md
-  
-      - name: Add information to release
-        uses: irongut/EditRelease@v1.2.0
-        with:
-          token: ${{ secrets.TOKEN_GITHUB }}
-          id: ${{ needs.prepare_build.outputs.id }}
-          replacebody: false
-          body: |
-            #### Module
-            - File name: `${{ steps.read_name.outputs.final_name }}`
-            - File hash (SHA256): `${{ steps.extract_and_build.outputs.module_hash }}`
-            #### Firmware
-            - Build ID: `${{ steps.extract_and_build.outputs.device_build_id }}`
-            - Android version: `${{ steps.extract_and_build.outputs.device_build_android_version }}`
-            - Security patch: `${{ steps.extract_and_build.outputs.device_build_security_patch }}`
