@@ -80,26 +80,11 @@ jobs:
           cp -r META-INF/ result/
           cp customize.sh result/
           zip -r ${{ steps.zip.outputs.zipname }}.zip result/*
-          pwd
-          ls
 
-      - name: ZipFile Sauce
-        id: zip
-        run: |
-          echo "zipname=$(cat build.txt)" >> $GITHUB_OUTPUT
-        working-directory: ./PixelPropsModule
-
-      - name: Upload Prop ${{ matrix.device_name }}
-        uses: actions/upload-artifact@v3
-        with:
-          name: ${{ steps.read_name.outputs.final_name }}
-          path: result
-          if-no-files-found: error
-        
       - name: Search archive zip
         working-directory: ./PixelPropsModule
         run: |
-          zipname=$(ls *.zip 2>/dev/null | head -n 1)
+          echo "zipname=$(ls *.zip 2>/dev/null | head -n 1)" >> $GITHUB_OUTPUT
           echo "zipname=$zipname" >> $GITHUB_ENV
         id: find-zip
 
