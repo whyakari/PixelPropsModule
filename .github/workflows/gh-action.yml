@@ -97,5 +97,3 @@ jobs:
           name: "PixelProps Update"
           tag_name: ${{ steps.read_name.outputs.final_name }}
           body_path: changelog.md
-
-        working-directory: ./PixelPropsModule
