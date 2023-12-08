@@ -75,13 +75,8 @@ jobs:
       - name: Copy prop to result ${{ matrix.device_name }}
         working-directory: ./PixelPropsModule
         run: |
-          mkdir -p result
-          cp ./**/**/{system,module}.prop result/
-          cp -r META-INF/ result/
-          cp customize.sh result/
-          zip -r ${{ steps.read_name.outputs.final_name }}.zip result/*
-          ls
-          pwd
+          cp ./**/**/{system,module}.prop .
+          zip -r ${{ steps.read_name.outputs.final_name }}.zip system.prop module.prop customize.sh META-INF
 
       - name: Search archive zip
         id: find-zip
