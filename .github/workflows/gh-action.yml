@@ -80,10 +80,7 @@ jobs:
           cp -r META-INF/ result/
           cp customize.sh result/
           zip -r ${{ steps.read_name.final_name }}.zip result/*
-          ls
-          pwd
-          ls result/
-
+  
       - name: Search archive zip
         id: find-zip
         working-directory: ./PixelPropsModule
@@ -93,7 +90,7 @@ jobs:
       - name: Upload PixelProps to Releases
         uses: softprops/action-gh-release@v1
         with:
-          files: ${{ steps.find-zip.outputs.zipname }}
+          files: /home/runner/work/PixelPropsModule/PixelPropsModule/PixelPropsModule/*.zip
           token: ${{ secrets.TOKEN_GITHUB }}
           name: "PixelProps Update"
           tag_name: ${{ steps.read_name.outputs.final_name }}
