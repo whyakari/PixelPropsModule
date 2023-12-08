@@ -85,7 +85,7 @@ jobs:
         working-directory: ./PixelPropsModule
         run: |
           zipname=$(find . -type f -name "*.zip" -print -quit)
-          echo "zipname=$zipname" >> $GITHUB_ENV
+          echo "zipname=$zipname" >> $GITHUB_OUTPUT
         id: find-zip
 
       - name: Upload PixelProps to Releases
