@@ -86,6 +86,20 @@ jobs:
           echo "final_name=$(cat build.txt)" >> $GITHUB_OUTPUT
         working-directory: ${{ github.workspace }}
 
+      - name: Copy prop to result ${{ matrix.device_name }}
+        run: |
+          mkdir -p result
+          cp ./**/**/{system,module}.prop result/
+          cp -r META-INF/ result/
+          cp customize.sh result/
+
+      - name: Upload Prop ${{ matrix.device_name }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ steps.read_name.outputs.final_name }}
+          path: result
+          if-no-files-found: error
+
       - name: Upload files to release
         uses: actions/upload-release-asset@v1
         env:
@@ -110,17 +124,3 @@ jobs:
             - Build ID: `${{ steps.extract_and_build.outputs.device_build_id }}`
             - Android version: `${{ steps.extract_and_build.outputs.device_build_android_version }}`
             - Security patch: `${{ steps.extract_and_build.outputs.device_build_security_patch }}`
-
-      - name: Copy prop to result ${{ matrix.device_name }}
-        run: |
-          mkdir -p result
-          cp ./**/**/{system,module}.prop result/
-          cp -r META-INF/ result/
-          cp customize.sh result/
-
-      - name: Upload Prop ${{ matrix.device_name }}
-        uses: actions/upload-artifact@v3
-        with:
-          name: ${{ steps.read_name.outputs.final_name }}
-          path: result
-          if-no-files-found: error
