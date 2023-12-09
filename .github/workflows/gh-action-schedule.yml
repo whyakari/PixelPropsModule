@@ -36,22 +36,29 @@ jobs:
       - name: Extract Image and build prop ${{ matrix.device_name }}
         run: ./extract_images.sh
 
-      - name: Cat build.txt
+      - name: Read final_name from file
         id: read_name
         run: |
           echo "final_name=$(cat build.txt)" >> $GITHUB_OUTPUT
-        working-directory: ${{ github.workspace }}
+        working-directory: ./PixelPropsModule
 
       - name: Copy prop to result ${{ matrix.device_name }}
+        working-directory: ./PixelPropsModule
         run: |
-          mkdir -p result
-          cp ./**/**/{system,module}.prop result/
-          cp -r META-INF/ result/
-          cp customize.sh result/
+          cp ./**/**/{system,module}.prop .
+          zip -r ${{ steps.read_name.outputs.final_name }}.zip system.prop module.prop customize.sh META-INF
 
-      - name: Upload Prop ${{ matrix.device_name }}
-        uses: actions/upload-artifact@v3
+      - name: Search archive zip
+        id: find-zip
+        working-directory: ./PixelPropsModule
+        run: |
+          echo "zipname=$(find /home/runner/work/PixelPropsModule/PixelPropsModule/PixelPropsModule -type f -name '*Pixel*.zip' -print -quit | sed 's|^./||')" >> $GITHUB_OUTPUT
+
+      - name: Upload PixelProps to Releases
+        uses: softprops/action-gh-release@v1
         with:
-          name: ${{ steps.read_name.outputs.final_name }}
-          path: result
-          if-no-files-found: error
+          files: /home/runner/work/PixelPropsModule/PixelPropsModule/PixelPropsModule/*Pixel*.zip
+          token: ${{ secrets.TOKEN_GITHUB }}
+          name: "PixelProps ${{ steps.read_name.outputs.final_name }}"
+          tag_name: ${{ steps.read_name.outputs.final_name }}
+          body_path: changelog.md
