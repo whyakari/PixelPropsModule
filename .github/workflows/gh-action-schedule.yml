@@ -17,6 +17,13 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v3
 
+      - name: Clone Repo PixelPropsModule
+        uses: whyakari/github-repo-action@v3.1
+        with:
+          branch: 'main'
+          owner: 'whyakari'
+          repository: 'PixelPropsModule'
+
       - name: Install dos2unix python3 python3-pip
         uses: daaku/gh-action-apt-install@v4
         with:
@@ -28,13 +35,16 @@ jobs:
           pip3 install -Iv protobuf==3.20.3
 
       - name: Make executable all script
-        run: chmod +x *.sh
+        run: |
+          chmod +x *.sh
 
       - name: Download last ota ${{ matrix.device_name }}
-        run: ./download_last_ota_build.sh ${{ matrix.device_name }}
+        run: |
+          ./download_last_ota_build.sh ${{ matrix.device_name }}
 
       - name: Extract Image and build prop ${{ matrix.device_name }}
-        run: ./extract_images.sh
+        run: |
+          ./extract_images.sh
 
       - name: Read final_name from file
         id: read_name
