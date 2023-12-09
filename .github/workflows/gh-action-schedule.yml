@@ -53,21 +53,24 @@ jobs:
         working-directory: ${{ github.workspace }}
 
       - name: Copy prop to result ${{ matrix.device_name }}
-        working-directory: ./PixelPropsModule
+        working-directory: ${{ github.workspace }}
         run: |
           cp ./**/**/{system,module}.prop .
           zip -r ${{ steps.read_name.outputs.final_name }}.zip system.prop module.prop customize.sh META-INF
+          pwd
 
       - name: Search archive zip
+        working-directory: ${{ github.workspace }}
         id: find-zip
-        working-directory: ./PixelPropsModule
         run: |
-          echo "zipname=$(find /home/runner/work/PixelPropsModule/PixelPropsModule/PixelPropsModule -type f -name '*Pixel*.zip' -print -quit | sed 's|^./||')" >> $GITHUB_OUTPUT
+          echo "zipname=$(find ${{ github.workspace }} -type f -name '*Pixel*.zip' -print -quit | sed 's|^./||')" >> $GITHUB_OUTPUT
+          echo $zipname
+          pwd
 
       - name: Upload PixelProps to Releases
         uses: softprops/action-gh-release@v1
         with:
-          files: /home/runner/work/PixelPropsModule/PixelPropsModule/PixelPropsModule/*Pixel*.zip
+          files: ${{ github.workspace }}/*Pixel*.zip
           token: ${{ secrets.TOKEN_GITHUB }}
           name: "PixelProps ${{ steps.read_name.outputs.final_name }}"
           tag_name: "PixelProps Update!"
