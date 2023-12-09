@@ -50,14 +50,13 @@ jobs:
         id: read_name
         run: |
           echo "final_name=$(cat build.txt)" >> $GITHUB_OUTPUT
-        working-directory: ./PixelPropsModule
+        working-directory: ${{ github.workspace }}
 
       - name: Copy prop to result ${{ matrix.device_name }}
         working-directory: ./PixelPropsModule
         run: |
           cp ./**/**/{system,module}.prop .
           zip -r ${{ steps.read_name.outputs.final_name }}.zip system.prop module.prop customize.sh META-INF
-          pwd
 
       - name: Search archive zip
         id: find-zip
