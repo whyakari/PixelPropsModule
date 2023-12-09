@@ -47,6 +47,7 @@ jobs:
         run: |
           cp ./**/**/{system,module}.prop .
           zip -r ${{ steps.read_name.outputs.final_name }}.zip system.prop module.prop customize.sh META-INF
+          pwd
 
       - name: Search archive zip
         id: find-zip
