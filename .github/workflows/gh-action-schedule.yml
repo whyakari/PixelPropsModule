@@ -71,5 +71,5 @@ jobs:
           files: /home/runner/work/PixelPropsModule/PixelPropsModule/PixelPropsModule/*Pixel*.zip
           token: ${{ secrets.TOKEN_GITHUB }}
           name: "PixelProps ${{ steps.read_name.outputs.final_name }}"
-          tag_name: ${{ steps.read_name.outputs.final_name }}
+          tag_name: "PixelProps Update!"
           body_path: changelog.md
