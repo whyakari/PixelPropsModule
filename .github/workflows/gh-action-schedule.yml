@@ -72,6 +72,6 @@ jobs:
         with:
           files: ${{ github.workspace }}/**/*.zip
           token: ${{ secrets.TOKEN_GITHUB }}
-          name: "PixelProps ${{ steps.read_name.outputs.final_name }}"
-          tag_name: "PixelProps Update!"
+          name: "PixelProps Update"
           body_path: changelog.md
+  
