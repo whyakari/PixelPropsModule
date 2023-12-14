@@ -70,7 +70,7 @@ jobs:
       - name: Upload PixelProps to Releases
         uses: softprops/action-gh-release@v1
         with:
-          files: ${{ github.workspace }}/**/*.zip
+          files: ${{ github.workspace }}/**/*Pixel*.zip
           token: ${{ secrets.TOKEN_GITHUB }}
           tag_name: "v1"
           name: "PixelProps"
